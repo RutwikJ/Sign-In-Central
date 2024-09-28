@@ -1,6 +1,10 @@
 import User from "../Models/user.model.js";
 import bcryptjs from 'bcryptjs';
-const auth= async (req,res)=>{
+import { errorHandler } from "../utils/error.js";
+
+
+
+const auth= async (req,res,next)=>{
     // console.log(req.body);
     // req is data we are getting from client side
 // res is data we are sending to client side
@@ -12,7 +16,7 @@ try{
     res.status(200).json({message:"successfully created user"})
     
 }catch(error){
-    res.status(500).json(error.message)
+    next(errorHandler(782,'Something went wrong There is a high possibility its your fault'))
 }
 
 }
