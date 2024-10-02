@@ -16,7 +16,7 @@ try{
     res.status(200).json({message:"successfully created user"})
     
 }catch(error){
-    next(errorHandler(782,'Something went wrong There is a high possibility its your fault'))
+    next(error)
 }
 
 }

@@ -5,7 +5,7 @@ export default function Header() {
     <div className="bg-slate-300">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
         <Link to="/">
-          <div class="flex items-center">
+          <div className="flex items-center">
             <img src="./src/assets/signincentralmernapp.jpg" className="w-8 h-8 mr-2 rounded-lg" alt="Icon" />
             <h1 className="text-xl font-bold">SignIn Central</h1>
           </div>
