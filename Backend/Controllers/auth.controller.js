@@ -1,10 +1,10 @@
 import User from "../Models/user.model.js";
 import bcryptjs from 'bcryptjs';
 import { errorHandler } from "../utils/error.js";
+import jwt from 'jsonwebtoken';
 
 
-
-const auth= async (req,res,next)=>{
+export const signUpAuth= async (req,res,next)=>{
     // console.log(req.body);
     // req is data we are getting from client side
 // res is data we are sending to client side
@@ -20,4 +20,27 @@ try{
 }
 
 }
- export default auth;
+
+export const signInAuth= async (req,res,next)=>{
+    try {
+        const {email,password}=req.body;
+        const validUser= await User.findOne({email})
+        if(!validUser){
+            return next(errorHandler(401,'Invalid User'));
+        }
+        const validPassword= bcryptjs.compareSync(password,validUser.password);
+        if(!validPassword){
+            return next(errorHandler(401,'Invalid credentials'));
+        }
+        const jwtToken= jwt.sign({id:validUser._id}, process.env.JWT_SECRET);
+        const{password:hashPassword,...rest}=validUser._doc;
+        res.cookie('access_token',jwtToken,{httpOnly:true,maxAge:3600000}).status(200).json(rest);
+        
+                
+
+        
+    } catch (error) {
+        next(error)
+    }
+}
+ 
